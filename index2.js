@@ -1,4 +1,7 @@
 import inquirer from "inquirer";
+import { AWSquestionFunction } from "./AWS.js";
+import { MongoDBFunction } from "./mongoDB.js";
+import { StandardDatabasesFunction } from "./databases.js";
 
 const databaseInfo = [];
 
@@ -9,49 +12,31 @@ function promptDatabase() {
         type: "list",
         name: "databaseType",
         message: "Select database type",
-        choices: ["MySQL", "PostgreSQL", "MongoDB", "S3", "DynamoDB"],
-      },
-      {
-        type: "input",
-        name: "host",
-        message: "Enter database host:",
-      },
-      {
-        type: "input",
-        name: "username",
-        message: "Enter database username:",
-      },
-      {
-        type: "password",
-        name: "password",
-        message: "Enter database password: ",
-        mask: "*",
-      },
-      {
-        type: "password",
-        name: "confirmPassword",
-        message: "Confirm database password",
-        mask: "*",
-        validate: function (value, answers) {
-          if (value !== answers.password) {
-            return "Passwords do not match";
-          }
-          return true;
-        },
-      },
-      {
-        type: "confirm",
-        name: "addAnother",
-        message: "Do you want to add another database?",
-        default: false,
+        choices: [
+          "MySQL",
+          "PostgreSQL",
+          "MongoDB",
+          "S3",
+          "DynamoDB",
+          "Cognito",
+          "RDS",
+        ],
       },
     ])
     .then((answers) => {
-      databaseInfo.push(answers);
-      if (answers.addAnother) {
-        return promptDatabase(); // Call promptDatabase recursively if user wants to add another database
+      const { databaseType } = answers;
+
+      if (
+        databaseType === "S3" ||
+        databaseType === "DynamoDB" ||
+        databaseType === "Cognito" ||
+        databaseType === "RDS"
+      ) {
+        return AWSquestionFunction(databaseType, databaseInfo);
+      } else if (databaseType === "MongoDB") {
+        return MongoDBFunction(databaseType, databaseInfo);
       } else {
-        return Promise.resolve(); // Resolve the promise to exit the loop
+        return StandardDatabasesFunction(databaseType, databaseInfo);
       }
     });
 }
@@ -63,3 +48,5 @@ promptDatabase()
   .catch((error) => {
     console.error("Error during prompt: ", error);
   });
+
+export { promptDatabase };
