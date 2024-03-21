@@ -1,49 +1,42 @@
 import inquirer from "inquirer";
-import { AWSquestionFunction } from "./AWS.js";
-import { MongoDBFunction } from "./mongoDB.js";
-import { StandardDatabasesFunction } from "./databases.js";
+import {
+  AWSquestionFunction,
+  MongoDBFunction,
+  StandardDatabasesFunction,
+} from "./services/index.js";
 
-const databaseInfo = [];
+const serviceInfo = [];
 
-function promptDatabase() {
+async function promptDatabase() {
   return inquirer
     .prompt([
       {
         type: "list",
-        name: "databaseType",
-        message: "Select database type",
-        choices: [
-          "MySQL",
-          "PostgreSQL",
-          "MongoDB",
-          "S3",
-          "DynamoDB",
-          "Cognito",
-          "RDS",
-        ],
+        name: "serviceType",
+        message: "Select service type",
+        choices: ["MySQL", "PostgreSQL", "MongoDB", "S3", "DynamoDB", "RDS"],
       },
     ])
-    .then((answers) => {
-      const { databaseType } = answers;
+    .then(async (answers) => {
+      const { serviceType } = answers;
 
       if (
-        databaseType === "S3" ||
-        databaseType === "DynamoDB" ||
-        databaseType === "Cognito" ||
-        databaseType === "RDS"
+        serviceType === "S3" ||
+        serviceType === "DynamoDB" ||
+        serviceType === "RDS"
       ) {
-        return AWSquestionFunction(databaseType, databaseInfo);
-      } else if (databaseType === "MongoDB") {
-        return MongoDBFunction(databaseType, databaseInfo);
+        return AWSquestionFunction(serviceType, serviceInfo);
+      } else if (serviceType === "MongoDB") {
+        return MongoDBFunction(serviceType, serviceInfo);
       } else {
-        return StandardDatabasesFunction(databaseType, databaseInfo);
+        return StandardDatabasesFunction(serviceType, serviceInfo);
       }
     });
 }
 
-promptDatabase()
+await promptDatabase()
   .then(() => {
-    console.log("Database setup completed", databaseInfo);
+    console.log("Service setup completed", serviceInfo);
   })
   .catch((error) => {
     console.error("Error during prompt: ", error);
