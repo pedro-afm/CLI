@@ -1,13 +1,15 @@
 import mysql from "mysql2/promise"; // Import mysql2/promise for using promises
+import { tablesConnection } from "../generateConfigs/mysql.js";
 
 const mySqlConnection = async function (mySQLCredentials) {
   try {
+    const { host, user, password, databaseName } = mySQLCredentials;
     // Create a connection pool
     const pool = mysql.createPool({
-      host: mySQLCredentials.host,
-      user: mySQLCredentials.user,
-      password: mySQLCredentials.password,
-      database: mySQLCredentials.databaseName,
+      host: host,
+      user: user,
+      password: password,
+      database: databaseName,
     });
 
     // Get a connection from the pool
@@ -15,8 +17,7 @@ const mySqlConnection = async function (mySQLCredentials) {
 
     try {
       // Execute the query
-      const [rows, fields] = await connection.query("SHOW TABLES");
-      console.log(rows);
+      await tablesConnection(connection, databaseName);
     } catch (error) {
       console.error("Error executing query:", error.message);
       throw error;
