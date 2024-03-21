@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { promptDatabase } from "../index2.js";
+import { promptServices } from "../index2.js";
 import { StandardDatabasesFunction } from "./databases.js";
 
 const MongoDBFunction = function (serviceType, serviceInfo) {
@@ -37,9 +37,9 @@ const MongoDBFunction = function (serviceType, serviceInfo) {
             })
             .then((confirmation) => {
               if (confirmation.addAnother) {
-                promptDatabase().then(resolve).catch(reject);
+                promptServices().then(resolve).catch(reject);
               } else {
-                resolve();
+                resolve(serviceInfo);
               }
             })
             .catch(reject);

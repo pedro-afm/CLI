@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { promptDatabase } from "../index2.js";
+import { promptServices } from "../index2.js";
 
 const AWSquestionFunction = function (serviceType, serviceInfo) {
   return new Promise((resolve, reject) => {
@@ -49,9 +49,9 @@ const AWSquestionFunction = function (serviceType, serviceInfo) {
         const { addAnother, confirmPassword, ...modifiedAnswers } = AWSanswers;
         serviceInfo.push({ serviceType, ...modifiedAnswers });
         if (AWSanswers.addAnother) {
-          promptDatabase().then(resolve).catch(reject);
+          promptServices().then(resolve).catch(reject);
         } else {
-          resolve();
+          resolve(serviceInfo);
         }
       })
       .catch(reject);

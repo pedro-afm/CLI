@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { promptDatabase } from "../index2.js";
+import { promptServices } from "../index2.js";
 
 const StandardDatabasesFunction = function (serviceType, serviceInfo) {
   return new Promise((resolve, reject) => {
@@ -26,23 +26,23 @@ const StandardDatabasesFunction = function (serviceType, serviceInfo) {
           message: "Enter database name:",
         },
         {
-          type: "password",
+          type: "input",
           name: "password",
           message: "Enter database password:",
-          mask: "*",
+          //mask: "*",
         },
-        {
-          type: "password",
+        /* {
+          type: "input",
           name: "confirmPassword",
           message: "Confirm database password",
-          mask: "*",
+          //mask: "*",
           validate: function (value, answers) {
             if (value !== answers.password) {
               return "Passwords do not match";
             }
             return true;
           },
-        },
+        }, */
         {
           type: "confirm",
           name: "addAnother",
@@ -54,9 +54,9 @@ const StandardDatabasesFunction = function (serviceType, serviceInfo) {
         const { addAnother, confirmPassword, ...modifiedAnswers } = database;
         serviceInfo.push({ serviceType, ...modifiedAnswers });
         if (database.addAnother) {
-          promptDatabase().then(resolve).catch(reject);
+          promptServices().then(resolve).catch(reject);
         } else {
-          resolve();
+          resolve(serviceInfo);
         }
       })
       .catch(reject);

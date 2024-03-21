@@ -7,7 +7,7 @@ import {
 
 const serviceInfo = [];
 
-async function promptDatabase() {
+async function promptServices() {
   return inquirer
     .prompt([
       {
@@ -34,12 +34,4 @@ async function promptDatabase() {
     });
 }
 
-await promptDatabase()
-  .then(() => {
-    console.log("Service setup completed", serviceInfo);
-  })
-  .catch((error) => {
-    console.error("Error during prompt: ", error);
-  });
-
-export { promptDatabase };
+export { promptServices, serviceInfo };
