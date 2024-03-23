@@ -1,7 +1,8 @@
 import fs from "fs";
-import path from "path";
+import { generateEntityRelation } from "./generateEntityRelations.js";
 
 async function generateEntityFile(columns, tableName) {
+  let relations;
   return new Promise((resolve, reject) => {
     const lastIndex = columns.length - 1;
     const content = `export default {
@@ -13,6 +14,7 @@ async function generateEntityFile(columns, tableName) {
         .map((column, index) => {
           const isLast = index === lastIndex;
           if (column.COLUMN_KEY === "MUL") {
+            relations = generateEntityRelation(column, tableName);
             return `{
               name: '${column.COLUMN_NAME}',
               type: "object",

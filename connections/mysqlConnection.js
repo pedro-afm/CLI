@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise"; // Import mysql2/promise for using promises
-import { tablesConnection } from "../generateConfigs/mysql.js";
+import { tablesConnection } from "../generateConfigs/generateMySQLEntities/mysql.js";
 
 const mySqlConnection = async function (mySQLCredentials) {
   try {
