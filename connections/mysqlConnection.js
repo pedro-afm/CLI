@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise"; // Import mysql2/promise for using promises
-import { tablesConnection } from "../generateConfigs/generateMySQLEntities/mysql.js";
+import { mysqlTablesConnection } from "../generateConfigs/generateMySQLEntities/mysql.js";
 
 const mySqlConnection = async function (mySQLCredentials) {
   try {
@@ -17,7 +17,7 @@ const mySqlConnection = async function (mySQLCredentials) {
 
     try {
       // Execute the query
-      await tablesConnection(connection, databaseName);
+      await mysqlTablesConnection(connection, databaseName);
     } catch (error) {
       console.error("Error executing query:", error.message);
       throw error;

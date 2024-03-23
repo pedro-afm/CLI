@@ -1,6 +1,6 @@
 import { generateEntityFile } from "./generateEntityFile.js";
 
-const tablesConnection = async function (connection, databaseName) {
+const mysqlTablesConnection = async function (connection, databaseName) {
   try {
     const [rows] = await connection.query("SHOW TABLES");
 
@@ -21,4 +21,4 @@ const tablesConnection = async function (connection, databaseName) {
   }
 };
 
-export { tablesConnection };
+export { mysqlTablesConnection };

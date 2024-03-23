@@ -20,8 +20,23 @@ const MongoDBFunction = function (serviceType, serviceInfo) {
             .prompt([
               {
                 type: "input",
-                name: "clusterConnectionString",
-                message: "Enter your MongoDB cluster connection string:",
+                name: "user",
+                message: "Enter your MongoDB cluster username:",
+              },
+              {
+                type: "input",
+                name: "clusterName",
+                message: "Enter your MongoDB clusterName:",
+              },
+              {
+                type: "input",
+                name: "databaseName",
+                message: "Enter your MongoDB cluster databaseName:",
+              },
+              {
+                type: "input",
+                name: "password",
+                message: "Enter your MongoDB cluster password:",
               },
             ])
             .then((mongoDBAnswers) => {
