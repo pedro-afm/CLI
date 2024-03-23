@@ -4,7 +4,7 @@ const mysqlTablesConnection = async function (connection, databaseName) {
   try {
     const [rows] = await connection.query("SHOW TABLES");
 
-    // Iterate over each row in the result set
+    //Iterate over each row in the result set
     for (const row of rows) {
       const tableName = row[`Tables_in_${databaseName}`];
 
