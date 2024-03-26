@@ -14,7 +14,15 @@ async function promptServices() {
         type: "list",
         name: "serviceType",
         message: "Select service type",
-        choices: ["MySQL", "PostgreSQL", "MongoDB", "S3", "DynamoDB", "RDS"],
+        choices: [
+          "MySQL",
+          "PostgreSQL",
+          "MongoDB",
+          "S3",
+          "DynamoDB",
+          "RDS",
+          "Cognito",
+        ],
       },
     ])
     .then(async (answers) => {
@@ -23,7 +31,8 @@ async function promptServices() {
       if (
         serviceType === "S3" ||
         serviceType === "DynamoDB" ||
-        serviceType === "RDS"
+        serviceType === "RDS" ||
+        serviceType === "Cognito"
       ) {
         return AWSquestionFunction(serviceType, serviceInfo);
       } else if (serviceType === "MongoDB") {

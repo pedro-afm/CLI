@@ -1,18 +1,21 @@
 import { mySqlConnection } from "./mysqlConnection.js";
 import { mongodbConnection } from "./mongodbConnection.js";
 import { generateS3ObjectConnection } from "../db/generateFunctions/s3ObjectConnectionGenerator.js";
+import { generateCognitoObjectConnection } from "../connectors/generateFunctions/cognitoObjectConnectionGenerator.js";
 
 const connect = async function (servicesInfo) {
+  console.log(servicesInfo);
   try {
-    servicesInfo.forEach((service) => {
-      if (service.serviceType === "MySQL") {
-        mySqlConnection(service);
-      } else if (service.serviceType === "MongoDB") {
-        mongodbConnection(service);
-      } else if (service.serviceType === "S3") {
+    switch (servicesInfo.serviceType) {
+      case "MySQL":
+        mySqlConnection(servicesInfo);
+      case "MongoDB":
+        mongodbConnection(servicesInfo);
+      case "S3":
         generateS3ObjectConnection();
-      }
-    });
+      case "Cognito":
+        generateCognitoObjectConnection();
+    }
   } catch (e) {
     console.error(e);
   }

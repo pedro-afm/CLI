@@ -1,5 +1,4 @@
 import inquirer from "inquirer";
-import { promptServices } from "../index2.js";
 
 const AWSquestionFunction = function (serviceType, serviceInfo) {
   return new Promise((resolve, reject) => {
@@ -11,22 +10,9 @@ const AWSquestionFunction = function (serviceType, serviceInfo) {
           message: "Enter your service access key ID:",
         },
         {
-          type: "password",
+          type: "input",
           name: "secretAccessKey",
           message: "Enter your service secret access key:",
-          mask: "*",
-        },
-        {
-          type: "password",
-          name: "confirmSecretAccessKey",
-          message: "Confirm secretAcessKey",
-          mask: "*",
-          validate: function (value, answers) {
-            if (value !== answers.secretAccessKey) {
-              return "Passwords do not match";
-            }
-            return true;
-          },
         },
         {
           type: "input",
@@ -38,21 +24,11 @@ const AWSquestionFunction = function (serviceType, serviceInfo) {
           name: "name",
           message: "Enter your service name:",
         },
-        {
-          type: "confirm",
-          name: "addAnother",
-          message: "Do you want to add another database?",
-          default: false,
-        },
       ])
       .then((AWSanswers) => {
         const { addAnother, confirmPassword, ...modifiedAnswers } = AWSanswers;
         serviceInfo.push({ serviceType, ...modifiedAnswers });
-        if (AWSanswers.addAnother) {
-          promptServices().then(resolve).catch(reject);
-        } else {
-          resolve(serviceInfo);
-        }
+        resolve(serviceInfo[0]);
       })
       .catch(reject);
   });

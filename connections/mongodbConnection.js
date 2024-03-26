@@ -7,6 +7,8 @@ let uri;
 
 const mongodbConnection = async function (mongodbCredentials) {
   try {
+    generateMongoDBObjectConnection(databaseName);
+
     const { databaseName } = mongodbCredentials;
     if (mongodbCredentials.clusterName) {
       const { user, password, clusterName, databaseName } = mongodbCredentials;

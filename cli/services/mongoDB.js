@@ -41,21 +41,7 @@ const MongoDBFunction = function (serviceType, serviceInfo) {
             ])
             .then((mongoDBAnswers) => {
               serviceInfo.push({ serviceType, ...mongoDBAnswers });
-              return inquirer.prompt([
-                {
-                  type: "confirm",
-                  name: "addAnother",
-                  message: "Do you want to add another database?",
-                  default: false,
-                },
-              ]);
-            })
-            .then((confirmation) => {
-              if (confirmation.addAnother) {
-                promptServices().then(resolve).catch(reject);
-              } else {
-                resolve(serviceInfo);
-              }
+              resolve(serviceInfo[0]);
             })
             .catch(reject);
         } else {
