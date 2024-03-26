@@ -14,7 +14,7 @@ const mysqlTablesConnection = async function (connection, databaseName) {
         [tableName, databaseName]
       );
 
-      await generateEntityFile(columns, tableName);
+      await generateEntityFile(columns, tableName, rows.length);
     }
   } catch (e) {
     throw e;

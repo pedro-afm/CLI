@@ -2,7 +2,7 @@ const columns = [];
 
 function generateEntityRelation(column, table) {
   const object = {
-    file: `${column.COLUMN_NAME}.js`,
+    //file: `${column.COLUMN_NAME}.js`,
     name: `${table}`,
     type: "object",
     primaryKey: false,
@@ -17,6 +17,8 @@ function generateEntityRelation(column, table) {
   };
 
   columns.push(object);
+  //console.log(columns, table);
+  return columns;
 }
 
 export { generateEntityRelation };
