@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
 import { mongodbCollectionsConnection } from "../generateConfigs/generateMongoDBEntities/mongodb.js";
+import { generateMongoDBObjectConnection } from "../db/generateFunctions/mongoObjectConnectionGenerator.js";
 
 //const client = new MongoClient();
 let uri;
@@ -18,6 +19,9 @@ const mongodbConnection = async function (mongodbCredentials) {
     const client = new MongoClient(uri);
     await client.connect();
     console.log("Connected to MongoDB");
+
+    // Generating the connection js file "mongodb.js" in db folder
+    generateMongoDBObjectConnection(databaseName);
 
     await mongodbCollectionsConnection(client, databaseName);
   } catch (error) {
