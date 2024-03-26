@@ -7,8 +7,6 @@ let uri;
 
 const mongodbConnection = async function (mongodbCredentials) {
   try {
-    generateMongoDBObjectConnection(databaseName);
-
     const { databaseName } = mongodbCredentials;
     if (mongodbCredentials.clusterName) {
       const { user, password, clusterName, databaseName } = mongodbCredentials;
@@ -22,12 +20,12 @@ const mongodbConnection = async function (mongodbCredentials) {
     await client.connect();
     console.log("Connected to MongoDB");
 
-    // Generating the connection js file "mongodb.js" in db folder
-    generateMongoDBObjectConnection(databaseName);
+    // To generate the js file for connection with mongodb
+    await generateMongoDBObjectConnection(mongodbCredentials);
 
     await mongodbCollectionsConnection(client, databaseName);
   } catch (error) {
-    console.error("Error connecting to MongoDB", e);
+    console.error("Error connecting to MongoDB", error);
     throw error;
   }
 };

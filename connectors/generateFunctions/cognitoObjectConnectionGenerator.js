@@ -1,12 +1,12 @@
 import fs from "fs";
 import path from "path";
 
-const generateCognitoObjectConnection = function () {
-  // Construct the file path relative to the current module
-  const filePath = path.join("./connectors/", "cognito.js");
+const generateCognitoObjectConnection = function (credentials) {
+  try {
+    // Construct the file path relative to the current module
+    const filePath = path.join("./connectors/", "cognito.js");
 
-  console.log("Chguei aqui");
-  const cognitoConnection = `export default {
+    const cognitoConnection = `export default {
     connector: {
         cognito: {
             type: "auth",
@@ -21,7 +21,10 @@ const generateCognitoObjectConnection = function () {
         }
     }
   }`;
-  fs.writeFileSync(filePath, cognitoConnection);
+    fs.writeFileSync(filePath, cognitoConnection);
+  } catch (e) {
+    throw e;
+  }
 };
 
 export { generateCognitoObjectConnection };

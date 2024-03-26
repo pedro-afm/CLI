@@ -9,12 +9,18 @@ const connect = async function (servicesInfo) {
     switch (servicesInfo.serviceType) {
       case "MySQL":
         mySqlConnection(servicesInfo);
+        break;
       case "MongoDB":
         mongodbConnection(servicesInfo);
+        break;
       case "S3":
-        generateS3ObjectConnection();
+        generateS3ObjectConnection(servicesInfo);
+        break;
       case "Cognito":
-        generateCognitoObjectConnection();
+        generateCognitoObjectConnection(servicesInfo);
+        break;
+      default:
+        console.error("Unknown service type:", servicesInfo.serviceType);
     }
   } catch (e) {
     console.error(e);

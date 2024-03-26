@@ -1,12 +1,16 @@
+import { generateEntityFile } from "./generateEntityFile.js";
+
 const mongodbCollectionsConnection = async function (client, databaseName) {
-  const database = client.db(databaseName);
-  const collections = await database.listCollections().toArray();
+  try {
+    const database = client.db(databaseName);
+    const collections = await database.listCollections().toArray();
 
-  const collectionNames = collections.map((collection) => {
-    return collection.name;
-  });
-
-  console.log(collectionNames);
+    for (const collection of collections) {
+      await generateEntityFile(collection);
+    }
+  } catch (e) {
+    throw new Error("Error connecting to database: " + e.message);
+  }
 };
 
 export { mongodbCollectionsConnection };

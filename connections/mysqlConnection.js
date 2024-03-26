@@ -3,7 +3,6 @@ import { mysqlTablesConnection } from "../generateConfigs/generateMySQLEntities/
 import { generateMySQLObjectConnection } from "../db/generateFunctions/mySQLObjectConnectionGenerator.js";
 
 const mySqlConnection = async function (mySQLCredentials) {
-  generateMySQLObjectConnection(mySQLCredentials);
   try {
     const { host, user, password, databaseName } = mySQLCredentials;
     // Create a connection pool
@@ -17,9 +16,12 @@ const mySqlConnection = async function (mySQLCredentials) {
     // Get a connection from the pool
     const connection = await pool.getConnection();
 
+    // Create file js with connection informations
+    generateMySQLObjectConnection(mySQLCredentials);
+
     try {
       // Execute the query
-      //await mysqlTablesConnection(connection, databaseName);
+      await mysqlTablesConnection(connection, databaseName);
     } catch (error) {
       console.error("Error executing query:", error.message);
       throw error;

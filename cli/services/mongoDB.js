@@ -1,5 +1,4 @@
 import inquirer from "inquirer";
-import { promptServices } from "../index2.js";
 import { StandardDatabasesFunction } from "./databases.js";
 
 const MongoDBFunction = function (serviceType, serviceInfo) {
